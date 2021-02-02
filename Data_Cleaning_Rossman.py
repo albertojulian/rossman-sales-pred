@@ -33,5 +33,8 @@ cleaned['Date'] =  pd.to_datetime(cleaned['Date'], format='%Y-%m-%d')
 # Drop all rows with Null values to get the most basic model running
 cleaned = cleaned.dropna(axis=0)
 
-cleaned.to_csv(index=False)
+# Write the cleaned DataFrame to a csv file in the current directory
+cwd = os.getcwd()
+path = cwd + "/cleaned.csv"
+cleaned.to_csv(path, index=False)
 
