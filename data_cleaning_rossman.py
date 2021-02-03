@@ -1,7 +1,8 @@
+import pandas as pd
+from datetime import datetime
+import os
+
 def clean_rossman(csv_tseries='train.csv', csv_store='store.csv', data_folder='data'):
-    import pandas as pd
-    from datetime import datetime
-    import os
 
     # Path names to read the csv files
     tseries_directory = os.path.join(data_folder, csv_tseries)
@@ -95,10 +96,10 @@ def clean_rossman(csv_tseries='train.csv', csv_store='store.csv', data_folder='d
 
     # Write the cleaned DataFrame to a csv file in the current directory
     cwd = os.getcwd()
-    path = cwd + "/cleaned.csv"
+    path = os.path.join(cwd, "cleaned.csv")
     cleaned.to_csv(path, index=False)
 
     return cleaned
 
 if __name__ == "__main__":
-    clean_rossman()
+    cleaned = clean_rossman()
