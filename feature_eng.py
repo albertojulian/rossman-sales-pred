@@ -3,7 +3,26 @@ import pandas as pd
 
 # load the cleaned dataframe
 def feat_eng(rossman_featured):
-
+    """
+    
+    This function perform some feature engineering tasks having as input a pandas dataframe. 
+    
+    - From the Date column, 3 news features (year, day of the month and week of the year) are created and
+     when necessary they have their type changed.
+     
+    - A new feature is obtained dividing the Sales per Customer per Store.
+    
+    - One hot encoding and target enconding techniques are applied to some categorical features.
+    
+    - Some features are dropped.
+    
+    ...
+    
+    Attributes
+    ----------
+    rossman_feature : pandas.core.frame.DataFrame
+         
+    """        
     # create a new features from Date column
     rossman_featured['Year'] = rossman_featured['Date'].dt.year                       # year
     #rossman_featured['Month'] = rossman_featured['Date'].dt.month                     # month
