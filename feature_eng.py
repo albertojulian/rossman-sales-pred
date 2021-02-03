@@ -1,49 +1,49 @@
 import category_encoders as ce
-from category_encoders import TargetEncoder
+import pandas as pd
 
-# read the cleaned file
-#rossman_cleaned = pd.read_csv("cleaned.csv", low_memory=False)
-rossman_cleaned = clean_rossman(csv_tseries='train.csv', csv_store='store.csv', data_folder='data')
+# load the cleaned dataframe
+def feat_eng(rossman_featured):
 
-# create a new features from Date column
-rossman_cleaned['Year'] = rossman_cleaned['Date'].dt.year                       # year
-#rossman_cleaned['Month'] = rossman_cleaned['Date'].dt.month                     # month 
-rossman_cleaned['Day'] = rossman_cleaned['Date'].dt.day                         # day of the month 
-rossman_cleaned['WeekofYear'] = rossman_cleaned['Date'].dt.isocalendar().week   # week of the year
+    # create a new features from Date column
+    rossman_featured['Year'] = rossman_featured['Date'].dt.year                       # year
+    #rossman_featured['Month'] = rossman_featured['Date'].dt.month                     # month
+    rossman_featured['Day'] = rossman_featured['Date'].dt.day                         # day of the month
+    rossman_featured['WeekofYear'] = rossman_featured['Date'].dt.isocalendar().week   # week of the year
 
-# convert Week of the Year to integer
-rossman_cleaned['WeekofYear'] = rossman_cleaned['WeekofYear'].astype(int)
+    # convert Week of the Year to integer
+    rossman_featured['WeekofYear'] = rossman_featured['WeekofYear'].astype(int)
 
-# apply one hot encoding to some features
-rossman_cleaned = pd.get_dummies(data=rossman_cleaned,
-                                 columns=['StateHoliday', 'SchoolHoliday', 'StoreType', 'Assortment', 'PromoInterval', 'DayOfWeek'],
-                                 prefix=['StateHoliday', 'SchoolHoliday', 'StoreType', 'Assortment', 'PromoInterval', 'DayOfWeek'],
-                                 prefix_sep='_')
+    # apply one hot encoding to some features
+    rossman_featured = pd.get_dummies(data=rossman_featured,
+                                     columns=['StateHoliday', 'SchoolHoliday', 'StoreType', 'Assortment', 'PromoInterval', 'DayOfWeek'],
+                                     prefix=['StateHoliday', 'SchoolHoliday', 'StoreType', 'Assortment', 'PromoInterval', 'DayOfWeek'],
+                                     prefix_sep='_')
 
-# apply target enconding to the feature Store
-ce_te  = ce.TargetEncoder(cols=['Store'])
-rossman_cleaned['Store_target'] = ce_te.fit_transform(rossman_cleaned['Store'], rossman_cleaned['Sales'])
+    # apply target enconding to the feature Store
+    ce_te  = ce.TargetEncoder(cols=['Store'])
+    rossman_featured['Store_target'] = ce_te.fit_transform(rossman_featured['Store'], rossman_featured['Sales'])
 
-# apply target enconding to the feature WeekofYear
-ce_te  = ce.TargetEncoder(cols=['WeekofYear'])
-rossman_cleaned['WeekofYear_target'] = ce_te.fit_transform(rossman_cleaned['WeekofYear'], rossman_cleaned['Sales'])
+    # apply target enconding to the feature WeekofYear
+    ce_te  = ce.TargetEncoder(cols=['WeekofYear'])
+    rossman_featured['WeekofYear_target'] = ce_te.fit_transform(rossman_featured['WeekofYear'], rossman_featured['Sales'])
 
-# apply target enconding to the feature day of the month
-ce_te  = ce.TargetEncoder(cols=['Day'])
-rossman_cleaned['Day_target'] = ce_te.fit_transform(rossman_cleaned['Day'], rossman_cleaned['Sales'])
+    # apply target enconding to the feature day of the month
+    ce_te  = ce.TargetEncoder(cols=['Day'])
+    rossman_featured['Day_target'] = ce_te.fit_transform(rossman_featured['Day'], rossman_featured['Sales'])
 
-# create new feature dividing sales per customers and store
-rossman_cleaned['Sales_Cust_Store']=  rossman_cleaned['Sales'] / (rossman_cleaned['Customers'] * rossman_cleaned['Store'])
+    # create new feature dividing sales per customers and store
+    rossman_featured['Sales_Cust_Store']=  rossman_featured['Sales'] / (rossman_featured['Customers'] * rossman_featured['Store'])
 
-# remove chosen features
-rossman_cleaned = rossman_cleaned.drop(['Date',
-                                        'Store',       
-                                        'Year',
-                                        'WeekofYear',
-                                        'Day',
-                                        'Customers',
-                                        'CompetitionOpenSinceMonth',
-                                        'CompetitionOpenSinceYear',
-                                        'Promo2SinceWeek',
-                                        'Promo2SinceYear'],
-                                         axis=1)
+    # remove chosen features
+    rossman_featured = rossman_featured.drop(['Date',
+                                            'Store',
+                                            'Year',
+                                            'WeekofYear',
+                                            'Day',
+                                            'Customers',
+                                            'CompetitionOpenSinceMonth',
+                                            'CompetitionOpenSinceYear',
+                                            'Promo2SinceWeek',
+                                            'Promo2SinceYear'],
+                                             axis=1)
+    return rossman_featured
