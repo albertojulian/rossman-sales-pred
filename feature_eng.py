@@ -2,7 +2,7 @@ import category_encoders as ce
 import pandas as pd
 
 # load the cleaned dataframe
-def feat_eng(rossman_featured, train_data=True, te_store=te_store, te_week=te_week, te_day=te_day):
+def feat_eng(rossman_featured, train_data=True, te_store=None, te_week=None, te_day=None) :
     """
     
     This function perform some feature engineering tasks having as input a pandas dataframe. 

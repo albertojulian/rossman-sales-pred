@@ -1,8 +1,8 @@
 # Rossmann Sales Prediction
-This repository describes the Mini Competition run in Data Science Retreat - Batch 25 between 2-4 February 2021, by the Team 3 composed by:
+This repository describes the participation in the Mini Competition run in Data Science Retreat - Batch 25 between 2-4 February 2021, from the Team 3 composed by:
+* Alberto Julián
 * Gert-Jan Dobbelaere
 * Sergio Vechi
-* Alberto Julián
 
 ## Introduction
 This DSR mini-competition is based on a Kaggle competition which run from Sep 30, 2015 to Dec 15, 2015:
@@ -44,15 +44,22 @@ month, day of the week, week of the year
 
 ### Jupyter notebooks
 * EDA_rossman.ipynb: Exploratory Data Analysis of the datasets
-* sales_plot.ipynb: shows several sets of sales plots in several modes
+* sales_plot.ipynb: shows several sets of sales plots in several modes (TODO)
 * pipeline.ipynb: shows a complete tour through the stages deployed in the python files: data cleaning, feature engineering and modelling
 
 ## Installation instructions
+Create a conda environment.
 ```bash
+conda create --name ROSSMANN_SALES python=3.7
+conda activate ROSSMANN_SALES
 git clone https://github.com/albertojulian/rossman-sales-pred
+cd rossman-sales-pred
 pip install -r requirements.txt
+jupyter notebook
 ```
-# TODO FINISH INSTALL INSTRUCTIONS
+
+The repository should show in the browser. Now you can use any of the three jupyter notebooks mentioned.
+
 
 ## Predictive accuracy
 
