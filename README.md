@@ -19,7 +19,8 @@ https://www.kaggle.com/c/rossmann-store-sales/overview/timeline
 
 ### Information provided
 Two csv files were provided:
-
+* train.csv
+* store.csv
 
 ### 
 
