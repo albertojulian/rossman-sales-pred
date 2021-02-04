@@ -38,16 +38,15 @@ Apart from the aforementioned datasets, the following files have been created:
 ### Python files
 * data_cleaning_rossman.py: performs the data cleaning of the datasets
 * feature_eng.py: performs the feature engineering of the cleaned datasets
-* models.py: includes the models tested and the accuracy based on the metric (TODO)
 * utils.py: plots sales of a bunch of stores in several modes: grouped by 
 month, day of the week, week of the year
 
 ### Jupyter notebooks
 * EDA_rossman.ipynb: Exploratory Data Analysis of the datasets
-* sales_plot.ipynb: shows several sets of sales plots in several modes (TODO)
 * pipeline.ipynb: shows a complete tour through the stages deployed in the python files: data cleaning, feature engineering and modelling
 
 ## Installation instructions
+Open a terminal.
 Create a conda environment.
 ```bash
 conda create --name ROSSMANN_SALES python=3.7
