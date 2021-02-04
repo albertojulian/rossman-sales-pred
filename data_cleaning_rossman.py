@@ -85,7 +85,7 @@ def clean_rossman(csv_tseries='train.csv', csv_store='store.csv', data_folder='d
     cleaned.loc[:, 'PromoInterval'].fillna('No Promo', inplace=True)
 
     # Now only columns with numbers in a categorical context remain so they get mapped to a zero value to be able to use
-    # them in the feature engineering of those columns, so a zero means no competition or no promo in those columns
+    # them in the feature engineering of those columns, a zero means no competition or no promo in those columns
     cleaned.fillna(0, inplace=True)
 
     # # Write the cleaned DataFrame to a csv file in the current directory
@@ -93,11 +93,12 @@ def clean_rossman(csv_tseries='train.csv', csv_store='store.csv', data_folder='d
     # path = os.path.join(cwd, "cleaned.csv")
     # cleaned.to_csv(path, index=False)
 
-    # Delete the fifth percentiles of the Customers and Sales columns
-    pct_cust = np.percentile(cleaned.loc[:, 'Customers'], 98)
-    cleaned = cleaned.loc[cleaned.loc[:, 'Customers'] < pct_cust]
-    pct_sales = np.percentile(cleaned.loc[:, 'Sales'], 98)
-    cleaned = cleaned.loc[cleaned.loc[:, 'Sales'] < pct_sales]
+    # Delete the second percentiles of the Customers and Sales columns when cleaning the train data
+    if csv_tseries = 'train.csv':
+        pct_cust = np.percentile(cleaned.loc[:, 'Customers'], 98)
+        cleaned = cleaned.loc[cleaned.loc[:, 'Customers'] < pct_cust]
+        pct_sales = np.percentile(cleaned.loc[:, 'Sales'], 98)
+        cleaned = cleaned.loc[cleaned.loc[:, 'Sales'] < pct_sales]
 
     # Change all the float columns to int type
     columns_to_int = ['DayOfWeek', 'Sales', 'Customers', 'Promo', 'SchoolHoliday', 'CompetitionDistance',
