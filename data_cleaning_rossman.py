@@ -94,7 +94,7 @@ def clean_rossman(csv_tseries='train.csv', csv_store='store.csv', data_folder='d
     # cleaned.to_csv(path, index=False)
 
     # Delete the second percentiles of the Customers and Sales columns when cleaning the train data
-    if csv_tseries = 'train.csv':
+    if csv_tseries == 'train.csv':
         pct_cust = np.percentile(cleaned.loc[:, 'Customers'], 98)
         cleaned = cleaned.loc[cleaned.loc[:, 'Customers'] < pct_cust]
         pct_sales = np.percentile(cleaned.loc[:, 'Sales'], 98)
