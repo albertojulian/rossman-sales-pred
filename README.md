@@ -1,3 +1,13 @@
 # rossman-sales-pred
 Mini Competition in DSR Batch 25: prediction of Rossman sales
-Just to try
+Team 3 composed by:
+* Gert-Jan Dobbelaer
+* Sergio Vechi
+* Alberto Julián
+
+## Content of the repository
+### Jupyter notebooks
+
+### Python files
+
+## Installation instructions
