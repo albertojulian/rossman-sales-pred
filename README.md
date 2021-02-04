@@ -6,7 +6,8 @@ This repository describes the Mini Competition run in Data Science Retreat - Bat
 
 ## Introduction
 This DSR mini-competition is based on a Kaggle competition which run from Sep 30, 2015 to Dec 15, 2015:
-https://www.kaggle.com/c/rossmann-store-sales/overview/timeline
+
+https://www.kaggle.com/c/rossmann-store-sales/overview/
 
 ### Generic objectives of the competition
 * Develop an end-to-end Data Science project
@@ -25,20 +26,35 @@ Two csv files were provided for training the models:
 * train.csv
 * store.csv
 
-Both datasets are described below.
+Both datasets are described in the EDA jupyter notebook.
 
-Additionally, a test dataset was provided to check the accuracy of the models. The holdout test period is from 2014-08-01 to 2015-07-31 - the holdout test dataset is the same format as `train.csv`, and is called `holdout.csv`.
+Additionally, a test dataset was provided to check the accuracy of the models. The holdout test period is from 2014-08-01 to 2015-07-31. The holdout test dataset has the same format as `train.csv`, and is called `holdout.csv`.
 
-### 
 
 ## Content of the repository
-### Jupyter notebooks
+
+Apart from the aforementioned datasets, the following files have been created:
 
 ### Python files
+* data_cleaning_rossman.py: performs the data cleaning of the datasets
+* feature_eng.py: performs the feature engineering of the cleaned datasets
+* models.py: includes the models tested and the accuracy based on the metric (TODO)
+* utils.py: plots sales of a bunch of stores in several modes: grouped by 
+month, day of the week, week of the year
+
+### Jupyter notebooks
+* EDA_rossman.ipynb: Exploratory Data Analysis of the datasets
+* sales_plot.ipynb: shows several sets of sales plots in several modes
+* pipeline.ipynb: shows a complete tour through the stages deployed in the python files: data cleaning, feature engineering and modelling
 
 ## Installation instructions
+```bash
+git clone https://github.com/albertojulian/rossman-sales-pred
+pip install -r requirements.txt
+```
+# TODO FINISH INSTALL INSTRUCTIONS
 
-##* Predictive accuracy
+## Predictive accuracy
 
 The task is to predict the `Sales` of a given store on a given day.
 
@@ -53,43 +69,4 @@ def metric(preds, actuals):
     assert preds.shape == actuals.shape
     return 100 * np.linalg.norm((actuals - preds) / actuals) / np.sqrt(preds.shape[0])
 ```
-
-More info from Kaggle:
-
-```
-Id - an Id that represents a (Store, Date) duple within the test set
-
-Store - a unique Id for each store
-
-Sales - the turnover for any given day (this is what you are predicting)
-
-Customers - the number of customers on a given day
-
-Open - an indicator for whether the store was open: 0 = closed, 1 = open
-
-StateHoliday - indicates a state holiday. Normally all stores, with few exceptions, are closed on state holidays. Note that all schools are closed on public holidays and weekends. a = public holiday, b = Easter holiday, c = Christmas, 0 = None
-
-SchoolHoliday - indicates if the (Store, Date) was affected by the closure of public schools
-
-StoreType - differentiates between 4 different store models: a, b, c, d
-
-Assortment - describes an assortment level: a = basic, b = extra, c = extended
-
-CompetitionDistance - distance in meters to the nearest competitor store
-
-CompetitionOpenSince[Month/Year] - gives the approximate year and month of the time the nearest competitor was opened
-
-Promo - indicates whether a store is running a promo on that day
-
-Promo2 - Promo2 is a continuing and consecutive promotion for some stores: 0 = store is not participating, 1 = store is participating
-
-Promo2Since[Year/Week] - describes the year and calendar week when the store started participating in Promo2
-PromoInterval - describes the consecutive intervals Promo2 is started, naming the months the promotion is started anew. E.g. "Feb,May,Aug,Nov" means each round starts in February, May, August, November of any given year for that store
-```
-
-The holdout test period is from 2014-08-01 to 2015-07-31 - the holdout test dataset is the same format as `train.csv`, as is called `holdout.csv`.
-
-After running `python data.py -- test 1`, the folder `data` will look like:
-
-```bash
 

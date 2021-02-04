@@ -2,7 +2,7 @@ import category_encoders as ce
 import pandas as pd
 
 # load the cleaned dataframe
-def feat_eng(rossman_featured):
+def feat_eng(rossman_featured, train_data=True, te_store=te_store, te_week=te_week, te_day=te_day):
     """
     
     This function perform some feature engineering tasks having as input a pandas dataframe. 
@@ -12,7 +12,7 @@ def feat_eng(rossman_featured):
      
     - A new feature is obtained dividing the Sales per Customer per Store.
     
-    - One hot encoding and target enconding techniques are applied to some categorical features.
+    - One hot encoding and target encoding techniques are applied to some categorical features.
     
     - Some features are dropped.
     
@@ -20,12 +20,12 @@ def feat_eng(rossman_featured):
     
     Attributes
     ----------
-    rossman_feature : pandas.core.frame.DataFrame
+    rossman_featured : pandas.core.frame.DataFrame
          
     """        
     # create a new features from Date column
     rossman_featured['Year'] = rossman_featured['Date'].dt.year                       # year
-    #rossman_featured['Month'] = rossman_featured['Date'].dt.month                     # month
+    #rossman_featured['Month'] = rossman_featured['Date'].dt.month                    # month
     rossman_featured['Day'] = rossman_featured['Date'].dt.day                         # day of the month
     rossman_featured['WeekofYear'] = rossman_featured['Date'].dt.isocalendar().week   # week of the year
 
@@ -38,20 +38,31 @@ def feat_eng(rossman_featured):
                                      prefix=['StateHoliday', 'SchoolHoliday', 'StoreType', 'Assortment', 'PromoInterval', 'DayOfWeek'],
                                      prefix_sep='_')
 
-    # apply target enconding to the feature Store
-    ce_te  = ce.TargetEncoder(cols=['Store'])
-    rossman_featured['Store_target'] = ce_te.fit_transform(rossman_featured['Store'], rossman_featured['Sales'])
+    if train_data == True:
+        # apply target encoding to the feature Store
+        te_store = ce.TargetEncoder(cols=['Store'])
+        rossman_featured['Store_target'] = te_store.fit_transform(rossman_featured['Store'], rossman_featured['Sales'])
 
-    # apply target enconding to the feature WeekofYear
-    ce_te  = ce.TargetEncoder(cols=['WeekofYear'])
-    rossman_featured['WeekofYear_target'] = ce_te.fit_transform(rossman_featured['WeekofYear'], rossman_featured['Sales'])
+        # apply target encoding to the feature WeekofYear
+        te_week = ce.TargetEncoder(cols=['WeekofYear'])
+        rossman_featured['WeekofYear_target'] = te_week.fit_transform(rossman_featured['WeekofYear'], rossman_featured['Sales'])
 
-    # apply target enconding to the feature day of the month
-    ce_te  = ce.TargetEncoder(cols=['Day'])
-    rossman_featured['Day_target'] = ce_te.fit_transform(rossman_featured['Day'], rossman_featured['Sales'])
+        # apply target encoding to the feature day of the month
+        te_day = ce.TargetEncoder(cols=['Day'])
+        rossman_featured['Day_target'] = te_day.fit_transform(rossman_featured['Day'], rossman_featured['Sales'])
+    else:
+        # apply target encoding to the feature Store
+        rossman_featured['Store_target'] = te_store.transform(rossman_featured['Store'])
 
-    # create new feature dividing sales per customers and store
-    rossman_featured['Sales_Cust_Store']=  rossman_featured['Sales'] / (rossman_featured['Customers'] * rossman_featured['Store'])
+        # apply target encoding to the feature WeekofYear
+        rossman_featured['WeekofYear_target'] = te_week.transform(rossman_featured['WeekofYear'])
+
+        # apply target encoding to the feature day of the month
+        rossman_featured['Day_target'] = te_day.transform(rossman_featured['Day'])
+
+
+    # # create new feature dividing sales per customers and store
+    # rossman_featured['Sales_Cust_Store']=  rossman_featured['Sales'] / (rossman_featured['Customers'] * rossman_featured['Store'])
 
     # remove chosen features
     rossman_featured = rossman_featured.drop(['Date',
@@ -65,4 +76,4 @@ def feat_eng(rossman_featured):
                                             'Promo2SinceWeek',
                                             'Promo2SinceYear'],
                                              axis=1)
-    return rossman_featured
+    return rossman_featured, te_store, te_week, te_day
