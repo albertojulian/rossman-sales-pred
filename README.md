@@ -6,7 +6,6 @@ This repository describes the Mini Competition run in Data Science Retreat - Bat
 
 ## Introduction
 This DSR mini-competition is based on a Kaggle competition which run from Sep 30, 2015 to Dec 15, 2015:
-![Rossmann Store Sales](https://www.kaggle.com/c/rossmann-store-sales/overview/)
 
 https://www.kaggle.com/c/rossmann-store-sales/overview/
 
@@ -29,22 +28,31 @@ Two csv files were provided for training the models:
 
 Both datasets are described in the EDA jupyter notebook.
 
-Additionally, a test dataset was provided to check the accuracy of the models. The holdout test period is from 2014-08-01 to 2015-07-31. The holdout test dataset is the same format as `train.csv`, and is called `holdout.csv`.
+Additionally, a test dataset was provided to check the accuracy of the models. The holdout test period is from 2014-08-01 to 2015-07-31. The holdout test dataset has the same format as `train.csv`, and is called `holdout.csv`.
 
-### 
 
 ## Content of the repository
-### Jupyter notebooks
-* EDA_rossman.ipynb: Exploratory Data Analysis of the datasets
-* 
+
+Apart from the aforementioned datasets, the following files have been created:
 
 ### Python files
 * data_cleaning_rossman.py: performs the data cleaning of the datasets
 * feature_eng.py: performs the feature engineering of the cleaned datasets
-* 
+* models.py: includes the models tested and the accuracy based on the metric (TODO)
+* utils.py: plots sales of a bunch of stores in several modes: grouped by 
+month, day of the week, week of the year
+
+### Jupyter notebooks
+* EDA_rossman.ipynb: Exploratory Data Analysis of the datasets
+* sales_plot.ipynb: shows several sets of sales plots in several modes
+* pipeline.ipynb: shows a complete tour through the stages deployed in the python files: data cleaning, feature engineering and modelling
 
 ## Installation instructions
+```bash
 git clone https://github.com/albertojulian/rossman-sales-pred
+pip install -r requirements.txt
+```
+# TODO FINISH INSTALL INSTRUCTIONS
 
 ## Predictive accuracy
 
